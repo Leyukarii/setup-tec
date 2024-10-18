@@ -76,7 +76,7 @@ onMounted(() => {
 form{
   display: grid;
   gap: 15px;
-  background-color: white;
+  background-color: #fff;
   padding: 30px;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -104,11 +104,12 @@ ul{
 }
 
 li{
-  background-color: #f9f9f9;
+  background-color: #fff;
   padding: 10px;
-  border: 1px solid #ddd;
   margin-bottom: 10px;
-
+  color: #626569;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .user-info {
