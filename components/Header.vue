@@ -12,9 +12,7 @@
 <script>
 export default{
   name: "Header"
-
 };
-
 </script>
 
 <style>
@@ -32,7 +30,5 @@ nav{
 
 .logo img{
   width: 150px;
-
 }
-
 </style>

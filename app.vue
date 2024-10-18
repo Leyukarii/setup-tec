@@ -30,6 +30,7 @@ h2,
 p{
   padding: 0px;
   margin: 0px;
+  color: #044c8c;
 }
 
 ul{
@@ -74,6 +75,7 @@ img{
 
 label{
   margin-bottom: 5px;
+  color: #626569;
 }
 
 input,
@@ -86,6 +88,7 @@ textarea{
   font-size: 1rem;
   font-family: "Avenir", Arial, Helvetica, sans-serif;
   margin-bottom: 15px;
+  color: #626569;
 }
 
 input:hover,
