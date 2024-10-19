@@ -1,7 +1,7 @@
 <template>
   <section class="cadastro">
     <div class="container">
-      <h1>{{ userStore.currentUser.id ? "Editar Usuário" : "Cadastre-se!" }}</h1>
+      <h1>{{ userStore.currentUser.id ? "Editar Usuário" : "Cadastro de Usuário" }}</h1>
       <form @submit.prevent="userStore.currentUser.id ? updateUser() : addUser()">
         <label>Nome Completo</label>
         <input type="text" v-model="userStore.currentUser.name" name="name" id="name">
@@ -14,8 +14,10 @@
         <button class="btn">{{ userStore.currentUser.id ? "Atualizar" : "Cadastrar" }}</button>
       </form>
 
-      <div v-if="userStore.users.length">
-        <h1>Usuários Cadastrados</h1>
+       <button class="btn" @click="toggleUserList">Listar Usuários</button>
+
+       <div v-if="showUsers && userStore.users.length">
+        <h1>Usuários Cadastrados</h1>        
         <ul>
           <li v-for="user in userStore.users" :key="user.id" class="user-item">
             <div class="user-info">
@@ -33,10 +35,11 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref } from 'vue';
 import { useUserStore } from '~/stores/useUserStore';
 
 const userStore = useUserStore();
+const showUsers = ref(false); 
 
 const addUser = () => {
   userStore.addUser();
@@ -54,16 +57,19 @@ const deleteUser = (userId) => {
   userStore.deleteUser(userId);
 };
 
-onMounted(() => {
-  userStore.fetchUsers();
-});
+const toggleUserList = () => {
+  if (!showUsers.value) {
+    userStore.fetchUsers();
+  }
+  showUsers.value = !showUsers.value;
+};
 
 </script>
 
 <style scoped>
 .cadastro{
   display: flex;
-  padding: 150px;
+  padding: 70px;
 }
 
 .container{
@@ -89,6 +95,7 @@ form{
   max-width: 300px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 20px;
 }
 
 h1{

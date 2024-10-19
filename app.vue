@@ -87,7 +87,7 @@ textarea{
   transition: all 0.3s;
   font-size: 1rem;
   font-family: "Avenir", Arial, Helvetica, sans-serif;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   color: #626569;
 }
 
