@@ -4,7 +4,7 @@
       <router-link to="/" class="logo">
         <img src="@/assets/logo.png" alt="Setup Tecnologia">
       </router-link>
-      <router-link class="btn" to="/login">Entrar</router-link>
+      <button class="btn">Entrar</button>
     </nav>
   </header>
 </template>

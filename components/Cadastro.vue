@@ -1,30 +1,36 @@
 <template>
-  <section class="cadastro">
-    <div class="container">
-      <h1>{{ userStore.currentUser.id ? "Editar Usuário" : "Cadastro de Usuário" }}</h1>
-      <form @submit.prevent="userStore.currentUser.id ? updateUser() : addUser()">
-        <label>Nome Completo</label>
-        <input type="text" v-model="userStore.currentUser.name" name="name" id="name">
+  <section class="flex justify-center py-16">
+    <div class="w-full max-w-lg">
+      <h1 class="text-2xl font-bold mb-6 text-center">{{ userStore.currentUser.id ? "Editar Usuário" : "Cadastro de Usuário" }}</h1>
+      <form @submit.prevent="userStore.currentUser.id ? updateUser() : addUser()"
+        class="grid gap-4 bg-white p-8 rounded-lg shadow-lg">
+        <label class="block text-gray-600">Nome Completo</label>
+        <input type="text" v-model="userStore.currentUser.name" class="w-full p-4 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        name="name" id="name">
 
-        <label>E-mail</label>
-        <input type="email" v-model="userStore.currentUser.email" name="email" id="email">
+        <label class="block text-gray-600">E-mail</label>
+        <input type="email" v-model="userStore.currentUser.email" class="w-full p-4 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+        name="email" id="email">
 
-        <label>Senha</label>
-        <input type="password" v-model="userStore.currentUser.password" name="password" id="password">
-        <button class="btn">{{ userStore.currentUser.id ? "Atualizar" : "Cadastrar" }}</button>
+        <label class="block text-gray-600">Senha</label>
+        <input type="password" v-model="userStore.currentUser.password" class="w-full p-4 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+        name="password" id="password">
+        <button class="w-64 mx-auto bg-blue-700 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+          {{ userStore.currentUser.id ? "Atualizar" : "Cadastrar" }}
+        </button>
       </form>
-
-       <button class="btn" @click="toggleUserList">Listar Usuários</button>
-
-       <div v-if="showUsers && userStore.users.length">
-        <h1>Usuários Cadastrados</h1>        
-        <ul>
-          <li v-for="user in userStore.users" :key="user.id" class="user-item">
-            <div class="user-info">
+      <div class="flex justify-center">
+        <button class="w-64 mx-auto bg-blue-700 text-white py-3 px-4 rounded-lg mt-8 hover:bg-blue-600 transition-all shadow-md" @click="toggleUserList">Listar Usuários</button>
+      </div>
+       <div v-if="showUsers && userStore.users.length" class="mt-8">
+        <h1 class="text-2xl font-bold mb-4 text-center">Usuários Cadastrados</h1>        
+        <ul class="space-y-4">
+          <li v-for="user in userStore.users" :key="user.id" class="bg-white p-4 rounded-lg shadow-md">
+            <div class="flex justify-between items-center">
               <span>{{ user.name }} - {{ user.email }}</span>
-              <div class="actions">
-                <button class="btn_2" @click="editUser(user.id)">Editar</button>
-                <button class="btn_2" @click="deleteUser(user.id)">Deletar</button>
+              <div class="flex gap-4">
+                <button class="bg-blue-700 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition-all" @click="editUser(user.id)">Editar</button>
+                <button class="bg-blue-700 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition-all" @click="deleteUser(user.id)">Deletar</button>
               </div>
             </div>
           </li>
@@ -66,81 +72,5 @@ const toggleUserList = () => {
 
 </script>
 
-<style scoped>
-.cadastro{
-  display: flex;
-  padding: 70px;
-}
-
-.container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-form{
-  display: grid;
-  gap: 15px;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-.btn{
-  width: 100%;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
-}
-
-h1{
-  font-size: 2rem;
-  margin-bottom: 20px;
-  margin-top: 30px;
-  text-align: center;
-}
-
-ul{
-  list-style-type: none;
-  padding: 0;
-}
-
-li{
-  background-color: #fff;
-  padding: 10px;
-  margin-bottom: 10px;
-  color: #626569;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.user-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-}
-.btn_2 {
-  margin-left: 10px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #006eb6;
-  color: white;
-  cursor: pointer;
-}
-
-.btn_2:hover {
-  background-color: #008edc;
-}
+<style>
 </style>
