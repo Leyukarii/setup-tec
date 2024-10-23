@@ -1,28 +1,38 @@
 <template>
-  <section class="cadastro">
-    <div class="container">
-      <h1>{{ userStore.currentUser.id ? "Editar Usuário" : "Cadastre-se!" }}</h1>
-      <form @submit.prevent="userStore.currentUser.id ? updateUser() : addUser()">
-        <label>Nome Completo</label>
-        <input type="text" v-model="userStore.currentUser.name" name="name" id="name">
+  <section class="flex py-36">
+    <div class="flex flex-col items-center w-full">
+      <h1 class="text-4xl mb-4 text-center text-[#044c8c]">
+        {{ userStore.currentUser.id ? "Edição de Usuário" : "Cadastro de Usuário" }}</h1>
+      <form class="grid gap-4 bg-white p-8 rounded-lg shadow-md w-full max-w-sm"
+      @submit.prevent="userStore.currentUser.id ? updateUser() : addUser()">
+        <label class="mb-1 text-[#626569]">Nome Completo</label>
+        <input class="rounded-md border border-white p-4 shadow-md transition-all duration-300 text-base font-sans mb-4 text-[#626569] focus:outline-none focus:border-[#008edc] focus:shadow-lg hover:shadow-lg"
+        type="text" v-model="userStore.currentUser.name" name="name" id="name">
 
-        <label>E-mail</label>
-        <input type="email" v-model="userStore.currentUser.email" name="email" id="email">
+        <label class="mb-1 text-[#626569]">E-mail</label>
+        <input class="rounded-md border border-white p-4 shadow-md transition-all duration-300 text-base font-sans mb-4 text-[#626569] focus:outline-none focus:border-[#008edc] focus:shadow-lg hover:shadow-lg"
+        type="email" v-model="userStore.currentUser.email" name="email" id="email">
 
-        <label>Senha</label>
-        <input type="password" v-model="userStore.currentUser.password" name="password" id="password">
-        <button class="btn">{{ userStore.currentUser.id ? "Atualizar" : "Cadastrar" }}</button>
+        <label class="mb-1 text-[#626569]">Senha</label>
+        <input class="rounded-md border border-white p-4 shadow-md transition-all duration-300 text-base font-sans mb-4 text-[#626569] focus:outline-none focus:border-[#008edc] focus:shadow-lg hover:shadow-lg"
+        type="password" v-model="userStore.currentUser.password" name="password" id="password">
+
+        <button class="w-full max-w-xs mx-auto block px-8 py-2 bg-[#006eb6] rounded-md text-white text-center text-base shadow-lg transition-all duration-300 hover:bg-[#008edc] hover:scale-110 focus:outline-none font-sans cursor-pointer">
+          {{ userStore.currentUser.id ? "Atualizar" : "Cadastrar" }}</button>
       </form>
 
-      <div v-if="userStore.users.length">
-        <h1>Usuários Cadastrados</h1>
-        <ul>
-          <li v-for="user in userStore.users" :key="user.id" class="user-item">
-            <div class="user-info">
+      <button class="w-full max-w-xs mx-auto block px-8 py-2 bg-[#006eb6] rounded-md text-white text-center text-base shadow-lg transition-all duration-300 hover:bg-[#008edc] hover:scale-110 focus:outline-none font-sans cursor-pointer mt-5" @click="toggleUserList">Listar Usuários</button>
+
+      <div v-if="showUserList && userStore.users.length">
+        <h1 class="text-3xl mb-4 mt-5 text-center text-[#044c8c]">Usuários Cadastrados</h1>
+        <ul class="list-none p-0 m-0 text-[#044c8c]"> 
+          <li class="bg-white p-2 mb-2 text-[#626569] rounded-lg shadow-md m-0 text-[#044c8c]"
+            v-for="user in userStore.users" :key="user.id">
+            <div class="flex justify-between items-center w-full">
               <span>{{ user.name }} - {{ user.email }}</span>
-              <div class="actions">
-                <button class="btn_2" @click="editUser(user.id)">Editar</button>
-                <button class="btn_2" @click="deleteUser(user.id)">Deletar</button>
+              <div class="flex gap-2">
+                <button  class="ml-2 px-2.5 py-1.5 border-none rounded-md bg-[#006eb6] text-white cursor-pointer hover:bg-[#008edc]" @click="editUser(user.id)">Editar</button>
+                <button  class="ml-2 px-2.5 py-1.5 border-none rounded-md bg-[#006eb6] text-white cursor-pointer hover:bg-[#008edc]" @click="deleteUser(user.id)">Deletar</button>
               </div>
             </div>
           </li>
@@ -33,10 +43,11 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '~/stores/useUserStore';
 
 const userStore = useUserStore();
+const showUserList = ref(false);
 
 const addUser = () => {
   userStore.addUser();
@@ -54,86 +65,11 @@ const deleteUser = (userId) => {
   userStore.deleteUser(userId);
 };
 
+const toggleUserList = () => {
+  showUserList.value = !showUserList.value;
+};
+
 onMounted(() => {
   userStore.fetchUsers();
 });
-
 </script>
-
-<style scoped>
-.cadastro{
-  display: flex;
-  padding: 150px;
-}
-
-.container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-form{
-  display: grid;
-  gap: 15px;
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
-}
-
-.btn{
-  width: 100%;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-h1{
-  font-size: 2rem;
-  margin-bottom: 20px;
-  margin-top: 30px;
-  text-align: center;
-}
-
-ul{
-  list-style-type: none;
-  padding: 0;
-}
-
-li{
-  background-color: #fff;
-  padding: 10px;
-  margin-bottom: 10px;
-  color: #626569;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.user-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-}
-.btn_2 {
-  margin-left: 10px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #006eb6;
-  color: white;
-  cursor: pointer;
-}
-
-.btn_2:hover {
-  background-color: #008edc;
-}
-</style>

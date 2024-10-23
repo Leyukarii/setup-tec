@@ -1,10 +1,10 @@
 <template>
   <header>
-    <nav>
-      <router-link to="/" class="logo">
-        <img src="@/assets/logo.png" alt="Setup Tecnologia">
-      </router-link>
-      <router-link class="btn" to="/login">Entrar</router-link>
+    <nav class="flex items-center justify-between p-4 shadow-md">
+      <div class="logo py-2.5">
+        <img class="w-[150px]" src="@/assets/logo.png" alt="Setup Tecnologia">
+      </div>
+      <div class="block px-8 py-2 bg-[#006eb6] rounded-md text-white text-center text-base shadow-lg transition-all duration-300 border-none font-sans cursor-pointer hover:bg-[#008edc]">Entrar</div>
     </nav>
   </header>
 </template>
@@ -14,21 +14,3 @@ export default{
   name: "Header"
 };
 </script>
-
-<style>
-nav{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  box-shadow: 0 2px 4px rgba(30, 60, 90, 0.1);
-}
-
-.logo{
-  padding: 10px 0;
-}
-
-.logo img{
-  width: 150px;
-}
-</style>
