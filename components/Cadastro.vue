@@ -1,36 +1,50 @@
 <template>
-  <section class="flex justify-center py-16">
-    <div class="w-full max-w-lg">
-      <h1 class="text-2xl font-bold mb-6 text-center">{{ userStore.currentUser.id ? "Editar Usuário" : "Cadastro de Usuário" }}</h1>
-      <form @submit.prevent="userStore.currentUser.id ? updateUser() : addUser()"
-        class="grid gap-4 bg-white p-8 rounded-lg shadow-lg">
-        <label class="block text-gray-600">Nome Completo</label>
-        <input type="text" v-model="userStore.currentUser.name" class="w-full p-4 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-        name="name" id="name">
+  <section class="flex flex-col py-8 md:py-36">
+    <div class="flex flex-col items-center w-full">
+      <h1 class="text-3xl md:text-4xl mb-4 text-center text-[#044c8c]">
+        {{ userStore.currentUser.id ? "Edição de Usuário" : "Cadastro de Usuário" }}
+      </h1>
+      <form class="grid gap-4 bg-white p-8 rounded-lg shadow-md w-full max-w-sm mx-auto" 
+            @submit.prevent="userStore.currentUser.id ? updateUser() : addUser()">
+        <label class="mb-1 text-[#626569]">Nome Completo</label>
+        <input class="rounded-md border p-4 shadow-md transition-all duration-300 text-base font-sans mb-4 text-[#626569] 
+              focus:outline-none focus:border-[#008edc] focus:shadow-lg hover:shadow-lg hover:border-[#008edc]"
+               type="text" v-model="userStore.currentUser.name" name="name" id="name">
 
-        <label class="block text-gray-600">E-mail</label>
-        <input type="email" v-model="userStore.currentUser.email" class="w-full p-4 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-        name="email" id="email">
+        <label class="mb-1 text-[#626569]">E-mail</label>
+        <input class="rounded-md border p-4 shadow-md transition-all duration-300 text-base font-sans mb-4 text-[#626569] 
+              focus:outline-none focus:border-[#008edc] focus:shadow-lg hover:shadow-lg hover:border-[#008edc]"
+               type="email" v-model="userStore.currentUser.email" name="email" id="email">
 
-        <label class="block text-gray-600">Senha</label>
-        <input type="password" v-model="userStore.currentUser.password" class="w-full p-4 rounded-lg border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-        name="password" id="password">
-        <button class="w-64 mx-auto bg-blue-700 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-all shadow-md">
+        <label class="mb-1 text-[#626569]">Senha</label>
+        <input class="rounded-md border p-4 shadow-md transition-all duration-300 text-base font-sans mb-4 text-[#626569] 
+        focus:outline-none focus:border-[#008edc] focus:shadow-lg hover:shadow-lg hover:border-[#008edc]"
+               type="password" v-model="userStore.currentUser.password" name="password" id="password">
+
+        <button class="w-full max-w-xs mx-auto block px-8 py-2 bg-[#006eb6] rounded-md text-white text-center text-base shadow-lg transition-all duration-300 hover:bg-[#008edc] hover:scale-110 focus:outline-none">
           {{ userStore.currentUser.id ? "Atualizar" : "Cadastrar" }}
         </button>
       </form>
-      <div class="flex justify-center">
-        <button class="w-64 mx-auto bg-blue-700 text-white py-3 px-4 rounded-lg mt-8 hover:bg-blue-600 transition-all shadow-md" @click="toggleUserList">Listar Usuários</button>
-      </div>
-       <div v-if="showUsers && userStore.users.length" class="mt-8">
-        <h1 class="text-2xl font-bold mb-4 text-center">Usuários Cadastrados</h1>        
-        <ul class="space-y-4">
-          <li v-for="user in userStore.users" :key="user.id" class="bg-white p-4 rounded-lg shadow-md">
-            <div class="flex justify-between items-center">
+
+      <button class="w-full max-w-xs mx-auto block px-8 py-2 bg-[#006eb6] rounded-md text-white text-center text-base shadow-lg transition-all duration-300 hover:bg-[#008edc] hover:scale-110 focus:outline-none font-sans cursor-pointer mt-5" 
+              @click="toggleUserList">
+        Listar Usuários
+      </button>
+
+      <div v-if="showUserList && userStore.users.length" class="w-full max-w-md mx-auto">
+        <h1 class="text-3xl mb-4 mt-5 text-center text-[#044c8c]">Usuários Cadastrados</h1>
+        <ul class="list-none p-0 m-0 text-[#044c8c]"> 
+          <li class="bg-white p-2 mb-2 text-[#626569] rounded-lg shadow-md"
+              v-for="user in userStore.users" :key="user.id">
+            <div class="flex justify-between items-center w-full">
               <span>{{ user.name }} - {{ user.email }}</span>
-              <div class="flex gap-4">
-                <button class="bg-blue-700 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition-all" @click="editUser(user.id)">Editar</button>
-                <button class="bg-blue-700 text-white py-1 px-4 rounded-lg hover:bg-blue-600 transition-all" @click="deleteUser(user.id)">Deletar</button>
+              <div class="flex gap-2">
+                <button class="ml-2 px-2.5 py-1.5 border-none rounded-md bg-[#006eb6] text-white cursor-pointer hover:bg-[#008edc]" @click="editUser(user.id)">
+                  Editar
+                </button>
+                <button class="ml-2 px-2.5 py-1.5 border-none rounded-md bg-[#006eb6] text-white cursor-pointer hover:bg-[#008edc]" @click="deleteUser(user.id)">
+                  Deletar
+                </button>
               </div>
             </div>
           </li>
@@ -41,11 +55,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useUserStore } from '~/stores/useUserStore';
 
 const userStore = useUserStore();
-const showUsers = ref(false); 
+const showUserList = ref(false);
 
 const addUser = () => {
   userStore.addUser();
@@ -64,13 +78,10 @@ const deleteUser = (userId) => {
 };
 
 const toggleUserList = () => {
-  if (!showUsers.value) {
-    userStore.fetchUsers();
-  }
-  showUsers.value = !showUsers.value;
+  showUserList.value = !showUserList.value;
 };
 
+onMounted(() => {
+  userStore.fetchUsers();
+});
 </script>
-
-<style>
-</style>
