@@ -20,9 +20,14 @@ export const useUserStore = defineStore('user', {
   }),
 
   actions:{
-    async fetchUsers(){
-      const response = await axios.get('api/users');
-      this.users = response.data.users;
+    async fetchUsers() {
+      try {
+        const response = await axios.get('api/users');
+        this.users = response.data.users;
+        console.log('Usuários carregados:', this.users);
+      } catch (error) {
+        console.error('Erro ao carregar usuários:', error);
+      }
     },
 
     async addUser(){
@@ -36,10 +41,12 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    async editUser(userId: string){
+    async editUser(userId: string) {
       const user = this.users.find(u => u.id === userId);
       if (user) {
         this.currentUser = { ...user };
+      } else {
+        console.error('Usuário não encontrado');
       }
     },
 
@@ -57,13 +64,13 @@ export const useUserStore = defineStore('user', {
       this.users = this.users.filter(u => u.id !== userId);
     },
 
-    clearForm(){
+    clearForm() {
       this.currentUser = {
         id: '',
         name: '',
         email: '',
         password: '',
       };
-    },
+    }
   },
 });
